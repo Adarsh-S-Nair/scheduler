@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import Button from './Button'
-import './Modal.css'
 
 const Modal = ({
   isOpen,
@@ -19,6 +18,14 @@ const Modal = ({
 }) => {
   const modalRef = useRef(null)
   const previousActiveElement = useRef(null)
+
+  // Size mappings
+  const sizeMap = {
+    sm: '400px',
+    md: '500px',
+    lg: '600px',
+    xl: '800px'
+  }
 
   // Handle escape key
   useEffect(() => {
@@ -89,27 +96,88 @@ const Modal = ({
 
   return createPortal(
     <div 
-      className="modal-backdrop"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: '20px',
+        animation: 'modalBackdropFadeIn 0.15s ease-out',
+        willChange: 'opacity'
+      }}
       onClick={handleBackdropClick}
     >
       <div 
         ref={modalRef}
-        className={`modal ${className} modal-${size}`}
+        style={{
+          backgroundColor: 'var(--color-bg)',
+          border: '1px solid var(--color-border)',
+          borderRadius: '12px',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          maxHeight: 'calc(100vh - 40px)',
+          width: '100%',
+          maxWidth: sizeMap[size] || sizeMap.md,
+          display: 'flex',
+          flexDirection: 'column',
+          animation: 'modalSlideIn 0.2s ease-out',
+          outline: 'none',
+          willChange: 'transform, opacity'
+        }}
+        className={className}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? "modal-title" : undefined}
       >
         {/* Header */}
-        <div className="modal-header">
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '12px 20px 0 20px',
+          borderBottom: '1px solid var(--color-border)',
+          marginBottom: 0
+        }}>
           {title && (
-            <h2 id="modal-title" className="modal-title">
+            <h2 id="modal-title" style={{
+              margin: 0,
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: 'var(--color-fg)',
+              lineHeight: 1.4
+            }}>
               {title}
             </h2>
           )}
           {!hideCloseButton && (
             <button
-              className="modal-close"
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: '8px',
+                borderRadius: '6px',
+                color: 'var(--color-muted)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 150ms ease-out',
+                marginLeft: '16px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-surface)'
+                e.currentTarget.style.color = 'var(--color-fg)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent'
+                e.currentTarget.style.color = 'var(--color-muted)'
+              }}
               onClick={onClose}
               aria-label="Close modal"
             >
@@ -122,17 +190,39 @@ const Modal = ({
         </div>
 
         {/* Content */}
-        <div className="modal-content">
+        <div style={{
+          padding: '20px',
+          flex: 1,
+          overflowY: 'auto',
+          color: 'var(--color-fg)',
+          lineHeight: 1.6
+        }}>
           {children}
         </div>
 
         {/* Footer */}
         {customFooter ? (
-          <div className="modal-footer">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: '12px',
+            padding: '16px 20px 20px 20px',
+            borderTop: '1px solid var(--color-border)',
+            marginTop: 0
+          }}>
             {customFooter}
           </div>
         ) : (primaryButton || secondaryButton) ? (
-          <div className="modal-footer">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: '12px',
+            padding: '16px 20px 20px 20px',
+            borderTop: '1px solid var(--color-border)',
+            marginTop: 0
+          }}>
             {secondaryButton && (
               <Button
                 variant={secondaryButton.variant || "secondary"}
@@ -140,6 +230,7 @@ const Modal = ({
                 onClick={handleSecondaryClick}
                 disabled={secondaryButton.disabled}
                 className={secondaryButton.className}
+                style={{ minWidth: '80px' }}
               >
                 {secondaryButton.text || "Cancel"}
               </Button>
@@ -151,6 +242,7 @@ const Modal = ({
                 onClick={handlePrimaryClick}
                 disabled={primaryButton.disabled}
                 className={primaryButton.className}
+                style={{ minWidth: '80px' }}
               >
                 {primaryButton.text || "Confirm"}
               </Button>
@@ -158,6 +250,24 @@ const Modal = ({
           </div>
         ) : null}
       </div>
+
+      {/* Animations keyframes - inject into document */}
+      <style>{`
+        @keyframes modalBackdropFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes modalSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>,
     document.body
   )
