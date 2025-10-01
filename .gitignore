@@ -23,10 +23,9 @@ dist-electron
 *.sln
 *.sw?
 
-# User-specific data (localStorage is stored in browser, but keeping this for future file-based storage)
-# When we move from localStorage to file-based storage, uncomment:
-# user-data.json
-# config/user-data.json
+# User-specific data (now using file-based storage)
+user-data.json
+config/user-data.json
 
 # Environment variables
 .env

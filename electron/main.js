@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import fs from 'node:fs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -36,13 +37,25 @@ function createWindow() {
     },
   })
 
-  // Test active push message to Renderer-process.
-  win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', (new Date).toLocaleString())
+  // Register keyboard shortcuts for DevTools
+  win.webContents.on('before-input-event', (event, input) => {
+    // Ctrl+Shift+I or F12 to toggle DevTools
+    if ((input.control && input.shift && input.key.toLowerCase() === 'i') || input.key === 'F12') {
+      if (win.webContents.isDevToolsOpened()) {
+        win.webContents.closeDevTools()
+      } else {
+        win.webContents.openDevTools()
+      }
+      event.preventDefault()
+    }
   })
+
+  // Removed test message - no longer needed
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
+    // Open DevTools in development
+    win.webContents.openDevTools()
   } else {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
@@ -76,6 +89,51 @@ ipcMain.handle('dialog:selectFolder', async () => {
     buttonLabel: 'Select Folder'
   })
   return result
+})
+
+// User data file path (in project root, gitignored)
+const USER_DATA_PATH = path.join(process.env.APP_ROOT, 'user-data.json')
+
+// Load user data from file
+ipcMain.handle('load-user-data', async () => {
+  try {
+    if (fs.existsSync(USER_DATA_PATH)) {
+      const data = fs.readFileSync(USER_DATA_PATH, 'utf-8')
+      console.log('User data loaded from file')
+      return JSON.parse(data)
+    }
+    console.log('No user data file found')
+    return null
+  } catch (error) {
+    console.error('Error loading user data:', error)
+    return null
+  }
+})
+
+// Save user data to file
+ipcMain.handle('save-user-data', async (event, data) => {
+  try {
+    fs.writeFileSync(USER_DATA_PATH, JSON.stringify(data, null, 2), 'utf-8')
+    console.log('User data saved to file:', USER_DATA_PATH)
+    return { success: true }
+  } catch (error) {
+    console.error('Error saving user data:', error)
+    return { success: false, error: error.message }
+  }
+})
+
+// Clear/delete user data file
+ipcMain.handle('clear-user-data', async () => {
+  try {
+    if (fs.existsSync(USER_DATA_PATH)) {
+      fs.unlinkSync(USER_DATA_PATH)
+      console.log('User data file deleted')
+    }
+    return { success: true }
+  } catch (error) {
+    console.error('Error deleting user data:', error)
+    return { success: false, error: error.message }
+  }
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

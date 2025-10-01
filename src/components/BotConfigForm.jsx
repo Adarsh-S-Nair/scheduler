@@ -50,13 +50,17 @@ const BotConfigForm = ({ bot, onSubmit, initialConfig, onValidChange }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     
+    console.log('BotConfigForm handleSubmit called')
+    console.log('Form is valid:', validate())
+    
     if (validate()) {
+      console.log('Calling onSubmit with:', formData)
       onSubmit(formData)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <form onSubmit={handleSubmit} className="bot-config-form" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div style={{ marginBottom: '4px' }}>
         <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--color-muted)', lineHeight: 1.5 }}>
           Enter your Wizard101 credentials to connect the <strong>{bot?.name}</strong> bot.
