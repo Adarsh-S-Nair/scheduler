@@ -1,11 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
+import { FaPlay } from 'react-icons/fa'
 import TitleBar from './components/TitleBar'
-import AppTopBar from './components/AppTopBar'
 import Button from './components/Button'
 import MultiStepModal from './components/MultiStepModal'
 import BotConfigForm from './components/BotConfigForm'
 import RepositoryPathForm from './components/RepositoryPathForm'
 import botsData from './data/bots.json'
+import { getBotIcon } from './utils/iconMap'
 import { initializeUserData, loadUserData, activateBot, getActiveBots, getBotConfig, saveBotConfig, getRepositoryPath, saveRepositoryPath } from './utils/userDataManager'
 import './App.css'
 
@@ -114,34 +115,32 @@ function App() {
         title: 'Select a Bot',
         content: (
           <div className="bot-list">
-            {bots.map((bot) => (
-              <div
-                key={bot.id}
-                className={`bot-item ${selectedBot?.id === bot.id ? 'selected' : ''}`}
-                onClick={() => setSelectedBot(bot)}
-              >
-                <div className="bot-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="11" width="18" height="10" rx="2" />
-                    <circle cx="12" cy="5" r="2" />
-                    <path d="M12 7v4" />
-                    <line x1="8" y1="16" x2="8" y2="16" />
-                    <line x1="16" y1="16" x2="16" y2="16" />
-                  </svg>
+            {bots.map((bot) => {
+              const BotIcon = getBotIcon(bot.icon)
+              
+              return (
+                <div
+                  key={bot.id}
+                  className={`bot-item ${selectedBot?.id === bot.id ? 'selected' : ''}`}
+                  onClick={() => setSelectedBot(bot)}
+                >
+                  <div className="bot-icon">
+                    <BotIcon />
+                  </div>
+                  <div className="bot-info">
+                    <h3 className="bot-name">{bot.name}</h3>
+                    <p className="bot-description">{bot.description}</p>
+                  </div>
+                  <div className="bot-select-indicator">
+                    {selectedBot?.id === bot.id && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    )}
+                  </div>
                 </div>
-                <div className="bot-info">
-                  <h3 className="bot-name">{bot.name}</h3>
-                  <p className="bot-description">{bot.description}</p>
-                </div>
-                <div className="bot-select-indicator">
-                  {selectedBot?.id === bot.id && (
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                  )}
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         ),
         primaryButton: {
@@ -236,36 +235,35 @@ function App() {
   return (
     <div className="App">
       <TitleBar />
-      <AppTopBar />
       <main className="main-content">
         {activeBotIds.length === 0 ? (
-          <div className="placeholder-content">
-            <div className="placeholder-icon">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                <path d="M9 9h6v6H9z"/>
-                <path d="M9 1v6"/>
-                <path d="M15 1v6"/>
-                <path d="M9 17v6"/>
-                <path d="M15 17v6"/>
-                <path d="M1 9h6"/>
-                <path d="M17 9h6"/>
-                <path d="M1 15h6"/>
-                <path d="M17 15h6"/>
-              </svg>
-            </div>
-            <h1 className="placeholder-title">No Bots Activated</h1>
-            <p className="placeholder-subtitle">
-              Get started by activating your first bot to begin scheduling tasks
-            </p>
-            <Button 
-              variant="primary" 
-              size="lg"
-              onClick={() => setIsModalOpen(true)}
-            >
-              Select a Bot
-            </Button>
+        <div className="placeholder-content">
+          <div className="placeholder-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <path d="M9 9h6v6H9z"/>
+              <path d="M9 1v6"/>
+              <path d="M15 1v6"/>
+              <path d="M9 17v6"/>
+              <path d="M15 17v6"/>
+              <path d="M1 9h6"/>
+              <path d="M17 9h6"/>
+              <path d="M1 15h6"/>
+              <path d="M17 15h6"/>
+            </svg>
           </div>
+          <h1 className="placeholder-title">No Bots Activated</h1>
+          <p className="placeholder-subtitle">
+            Get started by activating your first bot to begin scheduling tasks
+          </p>
+          <Button 
+            variant="primary" 
+            size="lg"
+              onClick={() => setIsModalOpen(true)}
+          >
+            Select a Bot
+          </Button>
+        </div>
         ) : (
           <div className="active-bots-container">
             <div className="active-bots-header">
@@ -283,25 +281,26 @@ function App() {
                 const bot = bots.find(b => b.id === botId)
                 if (!bot) return null
                 
+                const BotIcon = getBotIcon(bot.icon)
+                
                 return (
-                  <div key={botId} className="active-bot-card">
-                    <div className="active-bot-icon">
-                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="3" y="11" width="18" height="10" rx="2" />
-                        <circle cx="12" cy="5" r="2" />
-                        <path d="M12 7v4" />
-                        <line x1="8" y1="16" x2="8" y2="16" />
-                        <line x1="16" y1="16" x2="16" y2="16" />
-                      </svg>
-                    </div>
-                    <div className="active-bot-info">
-                      <h3 className="active-bot-name">{bot.name}</h3>
-                      <p className="active-bot-description">{bot.description}</p>
-                      <div className="active-bot-status">
-                        <div className="status-indicator"></div>
-                        <span>Connected</span>
+                  <div key={botId} className="active-bot-row">
+                    <div className="active-bot-main">
+                      <div className="active-bot-icon">
+                        <BotIcon />
+                      </div>
+                      <div className="active-bot-info">
+                        <h3 className="active-bot-name">{bot.name}</h3>
+                        <p className="active-bot-description">{bot.description}</p>
                       </div>
                     </div>
+                    <button
+                      className="bot-run-button"
+                      onClick={() => console.log('Run bot:', bot.name)}
+                      title={`Run ${bot.name}`}
+                    >
+                      <FaPlay />
+                    </button>
                   </div>
                 )
               })}

@@ -26,8 +26,13 @@ let win
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 900,
+    height: 700,
+    minWidth: 900,
+    maxWidth: 900,
+    minHeight: 700,
+    maxHeight: 700,
+    resizable: false,
     frame: false,
     titleBarStyle: 'hidden',
     title: 'Scheduler',

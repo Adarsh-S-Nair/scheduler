@@ -1,9 +1,16 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { FaCog, FaMoon } from 'react-icons/fa'
+import { BsSunFill } from 'react-icons/bs'
 import './TitleBar.css'
 
 const TitleBar = () => {
+  const [theme, setTheme] = useState('light')
+
   useEffect(() => {
     console.log('TitleBar rendered, ipcRenderer available:', !!window.ipcRenderer)
+    // Get initial theme from document
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light'
+    setTheme(currentTheme)
   }, [])
 
   const handleMinimize = () => {
@@ -45,10 +52,42 @@ const TitleBar = () => {
     }
   }
 
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    document.documentElement.setAttribute('data-theme', newTheme)
+  }
+
+  const handleSettings = () => {
+    // Settings functionality to be implemented
+    console.log('Settings clicked')
+  }
+
   return (
     <div className="titlebar">
       <div className="titlebar-drag-region">
         <div className="titlebar-title">Scheduler</div>
+      </div>
+      <div className="titlebar-actions">
+        {/* Theme Toggle */}
+        <button 
+          className="titlebar-button titlebar-action-button" 
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+          title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+        >
+          {theme === 'light' ? <FaMoon /> : <BsSunFill />}
+        </button>
+
+        {/* Settings Button */}
+        <button 
+          className="titlebar-button titlebar-action-button" 
+          onClick={handleSettings}
+          aria-label="Settings"
+          title="Settings"
+        >
+          <FaCog />
+        </button>
       </div>
       <div className="titlebar-controls">
         <button className="titlebar-button" onClick={handleMinimize} aria-label="Minimize">

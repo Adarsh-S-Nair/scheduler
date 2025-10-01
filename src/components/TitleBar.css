@@ -28,6 +28,20 @@
   font-weight: 500;
 }
 
+.titlebar-actions {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 4px;
+  padding-right: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.titlebar-action-button {
+  font-size: 13px;
+  padding: 0 8px;
+}
+
 .titlebar-controls {
   display: flex;
   height: 100%;

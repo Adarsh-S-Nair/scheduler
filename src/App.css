@@ -10,8 +10,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 20px 40px 20px;
-  margin-top: 80px; /* Account for title bar (32px) + app top bar (48px) */
+  padding: 20px;
+  margin-top: 32px; /* Account for title bar (32px) only */
   background-color: var(--color-bg);
   overflow-y: auto;
 }
@@ -19,6 +19,12 @@
 /* Center content only for placeholder */
 .main-content:has(.placeholder-content) {
   justify-content: center;
+}
+
+/* Center active bots container */
+.main-content:has(.active-bots-container) {
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .placeholder-content {
@@ -117,6 +123,7 @@
 .btn-primary {
   background-color: var(--color-accent);
   color: var(--color-on-accent);
+  font-weight: 600;
 }
 
 .btn-primary:hover {
@@ -126,6 +133,7 @@
 [data-theme="dark"] .btn-primary {
   background-color: var(--color-accent);
   color: black;
+  font-weight: 600;
 }
 
 [data-theme="dark"] .btn-primary:hover {
@@ -314,17 +322,15 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  background-color: var(--color-surface);
+  width: 32px;
+  height: 32px;
   color: var(--color-muted);
   flex-shrink: 0;
+  font-size: 24px;
 }
 
 .bot-item.selected .bot-icon {
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
+  color: var(--color-primary);
 }
 
 .bot-info {
@@ -365,8 +371,7 @@ code {
 /* Active bots view */
 .active-bots-container {
   width: 100%;
-  max-width: 1000px;
-  align-self: flex-start;
+  max-width: 700px;
 }
 
 .active-bots-header {
@@ -384,42 +389,49 @@ code {
 }
 
 .active-bots-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.active-bot-card {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 20px;
   display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  transition: all 150ms ease-out;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.active-bot-card:hover {
-  border-color: var(--color-muted);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.active-bot-row {
+  background-color: var(--color-bg);
+  border-radius: 10px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .active-bot-row {
+  box-shadow: 
+    0 2px 4px -1px rgba(0, 0, 0, 0.3),
+    0 4px 8px -1px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.active-bot-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
 }
 
 .active-bot-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  background-color: var(--color-primary);
-  color: var(--color-on-primary);
+  width: 32px;
+  height: 32px;
+  color: var(--color-muted);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-}
-
-[data-theme="dark"] .active-bot-icon {
-  background-color: var(--color-primary);
-  color: #000000;
+  font-size: 24px;
 }
 
 .active-bot-info {
@@ -429,40 +441,43 @@ code {
 
 .active-bot-name {
   margin: 0 0 4px 0;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--color-fg);
 }
 
 .active-bot-description {
-  margin: 0 0 12px 0;
-  font-size: 0.9rem;
+  margin: 0;
+  font-size: 0.875rem;
   color: var(--color-muted);
   line-height: 1.4;
 }
 
-.active-bot-status {
+.bot-run-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: var(--color-success);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: var(--color-success);
-  font-weight: 500;
+  justify-content: center;
+  transition: all 150ms ease-out;
+  flex-shrink: 0;
 }
 
-.status-indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-success);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.bot-run-button:hover {
+  background-color: var(--color-success-hover);
+  transform: scale(1.05);
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+.bot-run-button:active {
+  transform: scale(0.95);
+}
+
+.bot-run-button:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
 }
