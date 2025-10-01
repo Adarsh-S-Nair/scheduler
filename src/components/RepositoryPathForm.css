@@ -1,0 +1,77 @@
+.repo-path-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-hint {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.path-input-group {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.path-input-group .form-input {
+  flex: 1;
+}
+
+.browse-button {
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.path-examples {
+  padding: 12px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+.example-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-fg);
+  margin-bottom: 8px;
+}
+
+.example-paths {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.example-path {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  color: var(--color-muted);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 150ms ease-out;
+}
+
+.example-path:hover {
+  color: var(--color-fg);
+  border-color: var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.example-path:active {
+  transform: scale(0.98);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .path-examples {
+  background-color: var(--color-bg);
+}
+
+[data-theme="dark"] .example-path {
+  background-color: var(--color-surface);
+}

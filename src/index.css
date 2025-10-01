@@ -1,0 +1,178 @@
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+
+  /* Light mode colors */
+  --color-bg: #ffffff;
+  --color-surface: #f0f1f3;
+  --color-fg: #484444;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-ring: #a5b4fc;
+
+  --color-primary: #484444;
+  --color-primary-hover: #3e3a3a;
+  --color-on-primary: #ffffff;
+
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-hover);
+  --color-on-accent: var(--color-on-primary);
+
+  --color-success: #22c55e;
+  --color-success-hover: #16a34a;
+  --color-on-success: #ffffff;
+
+  --color-danger: #ef4444;
+  --color-on-danger: #ffffff;
+
+  --color-warn: #f97316;
+  --color-on-warn: #ffffff;
+
+  --color-input-bg: #ffffff;
+  --color-input-fg: #0f172a;
+  --color-input-placeholder: #94a3b8;
+
+  --color-content-bg: #f7f8fa;
+  --color-shadow: rgba(0, 0, 0, 0.08);
+  --color-card-border: rgba(0, 0, 0, 0.06);
+
+  /* Title bar colors */
+  --titlebar-bg: #ffffff;
+  --titlebar-border: #e9ecef;
+  --titlebar-text: #333333;
+  --titlebar-button-color: #666666;
+  --titlebar-button-hover-bg: #f8f9fa;
+  --titlebar-button-hover-color: #333333;
+
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+[data-theme="dark"] {
+  --color-bg: #22272e;
+  --color-surface: #2a3038;
+  --color-fg: #e6edf3;
+  --color-muted: #a3afba;
+  --color-border: #2d3748;
+  --color-ring: #7aa2f7;
+
+  --color-primary: #e6edf3;
+  --color-primary-hover: #cdd6e0;
+  --color-on-primary: #ffffff;
+
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-hover);
+  --color-on-accent: var(--color-on-primary);
+
+  --color-success: #2ea043;
+  --color-success-hover: #238636;
+  --color-on-success: #ffffff;
+
+  --color-danger: #dc2626;
+  --color-on-danger: #ffffff;
+
+  --color-warn: #f08722;
+  --color-on-warn: #ffffff;
+
+  --color-input-bg: #2b313a;
+  --color-input-fg: #e6edf3;
+  --color-input-placeholder: #9aa7b2;
+
+  --color-content-bg: #262c34;
+  --color-shadow: rgba(0, 0, 0, 0.12);
+  --color-card-border: rgba(255, 255, 255, 0.04);
+
+  /* Title bar dark mode colors */
+  --titlebar-bg: #22272e;
+  --titlebar-border: #2d3748;
+  --titlebar-text: #e6edf3;
+  --titlebar-button-color: #a3afba;
+  --titlebar-button-hover-bg: #2a3038;
+  --titlebar-button-hover-color: #e6edf3;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Focus outline color harmonized across components */
+:where(button, [role="button"], a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+/* Thin, minimal scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+/* Webkit scrollbar styling for Chrome, Safari, Edge */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 3px;
+  border: none;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-muted);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Even thinner scrollbars for main content areas */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 2px;
+  border: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-muted);
+}
+
+.scrollbar-thin::-webkit-scrollbar-corner {
+  background: transparent;
+}

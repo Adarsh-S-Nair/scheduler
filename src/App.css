@@ -1,0 +1,359 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--color-bg);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px 40px 20px;
+  margin-top: 80px; /* Account for title bar (32px) + app top bar (48px) */
+  background-color: var(--color-bg);
+  overflow-y: auto;
+}
+
+.placeholder-content {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.placeholder-title + .placeholder-subtitle {
+  margin-top: -8px;
+}
+
+.placeholder-icon {
+  color: var(--color-muted);
+  opacity: 0.6;
+}
+
+.placeholder-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.placeholder-subtitle {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* Button component styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 150ms ease-out;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  user-select: none;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Button sizes */
+.btn-sm {
+  height: 2rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.btn-md {
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-lg {
+  height: 2.75rem;
+  padding: 0.5rem 1.25rem;
+}
+
+.btn-icon-sm {
+  height: 2rem;
+  width: 2rem;
+  padding: 0;
+}
+
+.btn-icon {
+  height: 2.25rem;
+  width: 2.25rem;
+  padding: 0;
+}
+
+.btn-icon-lg {
+  height: 2.75rem;
+  width: 2.75rem;
+  padding: 0;
+}
+
+/* Button variants */
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+[data-theme="dark"] .btn-primary {
+  background-color: var(--color-accent);
+  color: black;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-fg);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-fg);
+}
+
+.btn-ghost:hover {
+  background-color: var(--color-surface);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+  color: var(--color-on-danger);
+}
+
+.btn-danger:hover {
+  opacity: 0.9;
+}
+
+.btn-danger:focus-visible {
+  outline-color: var(--color-danger);
+}
+
+.btn-danger-subtle {
+  background-color: transparent;
+  color: var(--color-danger);
+}
+
+.btn-danger-subtle:hover {
+  background-color: var(--color-danger);
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.btn-danger-subtle:focus-visible {
+  outline-color: var(--color-danger);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.card button {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin: 8px;
+}
+
+.card button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.card button:focus {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.message {
+  background: color-mix(in oklab, var(--color-success), transparent 90%);
+  border: 1px solid var(--color-success);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: var(--color-success);
+  font-size: 0.9rem;
+}
+
+.features {
+  margin-top: 40px;
+  text-align: left;
+  max-width: 400px;
+}
+
+.features h3 {
+  color: var(--color-fg);
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.features li {
+  padding: 6px 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+code {
+  background-color: var(--color-surface);
+  color: var(--color-danger);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-size: 0.9em;
+}
+
+/* Modal placeholder content */
+.modal-placeholder {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.modal-placeholder-icon {
+  color: var(--color-muted);
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+
+.modal-placeholder-title {
+  margin: 0 0 12px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.modal-placeholder-text {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* Bot list styles */
+.bot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bot-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms ease-out;
+  background-color: var(--color-bg);
+}
+
+.bot-item:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-muted);
+}
+
+.bot-item.selected {
+  background-color: var(--color-surface);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.bot-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background-color: var(--color-surface);
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.bot-item.selected .bot-icon {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.bot-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bot-name {
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+
+.bot-description {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+.bot-select-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+/* Dark mode adjustments for bot items */
+[data-theme="dark"] .bot-item.selected .bot-icon {
+  background-color: var(--color-primary);
+  color: #000000;
+}

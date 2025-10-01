@@ -1,0 +1,101 @@
+.bot-config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-description {
+  margin-bottom: 4px;
+}
+
+.form-description p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-fg);
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  color: var(--color-input-fg);
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  outline: none;
+  transition: all 150ms ease-out;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-input::placeholder {
+  color: var(--color-input-placeholder);
+}
+
+.form-input:hover {
+  border-color: var(--color-muted);
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-primary), transparent 85%);
+}
+
+.form-input.error {
+  border-color: var(--color-danger);
+}
+
+.form-input.error:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-danger), transparent 85%);
+}
+
+.form-error {
+  font-size: 0.8rem;
+  color: var(--color-danger);
+  margin-top: -2px;
+}
+
+.form-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.form-note svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  opacity: 0.7;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .form-input {
+  background-color: var(--color-input-bg);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .form-input:hover {
+  border-color: var(--color-muted);
+}
+
+

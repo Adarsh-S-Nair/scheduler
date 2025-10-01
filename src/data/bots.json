@@ -1,0 +1,8 @@
+[
+  {
+    "id": "trivia",
+    "name": "Trivia",
+    "description": "Run automated trivia games and quizzes",
+    "icon": "quiz"
+  }
+]
